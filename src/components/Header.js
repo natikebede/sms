@@ -23,6 +23,9 @@ function Header (props)
                   <Collapse isOpen={navopen} navbar>
                   <Nav navbar className="  fw-bolder mt-1  w-50 ml-auto">
                             <NavItem>
+                                <NavLink className="nav-link "  to='/Mywallet'> Mywallet</NavLink>
+                            </NavItem>
+                            <NavItem>
                                 <NavLink className="nav-link "  to='/newExpenss'>   new Expenss</NavLink>
                             </NavItem>
                             <NavItem>

@@ -8,6 +8,7 @@ import { Switch,Route } from 'react-router-dom';
 import NewExpenss from './components/New_Expenss';
 import ExpenseReport from './components/Expense_report';
 import { Redirect } from 'react-router-dom';
+import Mywallet from './components/Mywallet';
 
 function pull_request (values)
 {
@@ -36,6 +37,7 @@ function App() {
     <Switch>
       <Route path="/newExpenss" exact component={NewExpenss}/>
       <Route path="/Report" component={ExpenseReport}/> 
+      <Route path="/Mywallet" component={Mywallet}/>
       <Redirect to="/newExpenss"/>
     
 
