@@ -3,14 +3,34 @@ import { useState } from "react";
 import {Row,Col, Card, CardHeader, CardBody,Collapse,Button, Container, FormGroup, Label,Input} from "reactstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faWallet ,faClose ,faUserFriends} from '@fortawesome/free-solid-svg-icons'
+import Adjustment_modal from "./Adjustmodal";
+import { editableInputTypes } from "@testing-library/user-event/dist/utils";
 
 function Mywallet (props)
-{   const [cardopen, setcardopen]=useState(true);
+{   
+    const [isAccount,setAccount]=useState({
+        Balance:"",
+        Account:"CBE"
 
+    });
+    const [cardopen, setcardopen]=useState(true);
+    const [ adjustopen, setadjust]=useState(false);
     const toggle_modal=()=>
     {
         setcardopen(!cardopen);
     }
+    const toggel_adjustment =()=>
+    {
+        setadjust(!adjustopen);
+    }
+   function adjust_Account(props)
+   {
+      
+       console.log(props);
+    setAccount(values => ({...values,Balance: props.Balance,Account:props.Account}))
+
+   }
+    
     return (
         <div className="container-fluid bg-light">
             <Container>
@@ -29,8 +49,8 @@ function Mywallet (props)
                           
                             </Col>
                             <Col md={7} onClick={toggle_modal} className="  p-0">
-                            <h6 className="text-secondary  p-0"> CBE
-                            <p className=" text-success fw-bold p-0">+$ 1000</p>
+                            <h6 className="text-secondary  p-0 mx-3"> {isAccount.Account}
+                            <p className=" text-success fw-bold p-0 ">+$ {isAccount.Balance}</p>
                             </h6>
                            
                             
@@ -128,7 +148,7 @@ function Mywallet (props)
                                 </Row>
                                 <hr/>
                                 <div className=" w-100 d-flex justify-content-center">
-                                    <Button color="success"className=" w-100 fw-bold border-0" outline>ADJUST BALANCE</Button>
+                                    <Button onClick={toggel_adjustment}  color="success"className=" w-100 fw-bold border-0" outline>ADJUST BALANCE</Button>
                                 </div>
                                 
                                 </Container>
@@ -142,7 +162,7 @@ function Mywallet (props)
                 </Col>
             </Row>
             </Container>
-           
+            <Adjustment_modal open={adjustopen} toggles={toggel_adjustment} Account={isAccount} adjust={adjust_Account}/>
         </div>
     );
 }
