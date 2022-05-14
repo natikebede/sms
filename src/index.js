@@ -9,7 +9,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter><App className="bg-secondary"/></BrowserRouter>
+    <BrowserRouter><App className="bg-light"/></BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

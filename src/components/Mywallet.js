@@ -1,10 +1,10 @@
 import React from "react";
 import { useState } from "react";
-import {Row,Col, Card, CardHeader, CardBody,Collapse,Button, Container, FormGroup, Label,Input} from "reactstrap";
+import {Row,Col, Card, CardHeader, CardBody,Collapse,Button, Container, FormGroup, Label,Input, Modal,ModalHeader, ModalBody, ModalFooter} from "reactstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faWallet ,faClose ,faUserFriends} from '@fortawesome/free-solid-svg-icons'
 import Adjustment_modal from "./Adjustmodal";
-import { editableInputTypes } from "@testing-library/user-event/dist/utils";
+
 
 function Mywallet (props)
 {   
@@ -15,6 +15,11 @@ function Mywallet (props)
     });
     const [cardopen, setcardopen]=useState(true);
     const [ adjustopen, setadjust]=useState(false);
+    const [ deleteModal,setdeletModal] =useState(false);
+    const toggle_delete_modal=()=>
+    {
+        setdeletModal (!deleteModal);
+    }
     const toggle_modal=()=>
     {
         setcardopen(!cardopen);
@@ -27,8 +32,13 @@ function Mywallet (props)
    {
       
        console.log(props);
-    setAccount(values => ({...values,Balance: props.Balance,Account:props.Account}))
+    setAccount(values => ({...values,Balance: props.Balance,Account:props.Account}));
 
+   }
+   function delete_wallet ()
+   {
+       setAccount(values=>({ ...values,Balance:"",Account:""}));
+       toggle_delete_modal();
    }
     
     return (
@@ -74,7 +84,7 @@ function Mywallet (props)
                                </Col>
                                <Col sm={7} className="">
                                    <div className="d-flex justify-content-end">
-                                   <Button color="danger" className="me-3 ms-2 p-2 fw-bold" outline>Delete</Button>
+                                   <Button color="danger" className="me-3 ms-2 p-2 fw-bold" onClick={toggle_delete_modal} outline>Delete</Button>
                                     <Button color="success"className=" me-2 ms-2 p-2 fw-bold" outline>Edit</Button>
                                    </div>
                               
@@ -91,7 +101,7 @@ function Mywallet (props)
                                          <FontAwesomeIcon icon={faWallet}  className="text-info fa-3x" />
                                      </div>
                                      <div className="  px-3">
-                                        <h6 className="mx-2 text-secondary"> Natnael Kebede </h6>
+                                        <h6 className="mx-2 text-secondary"> {isAccount.Account} </h6>
                                         <p className="mx-2   text-secondary" >  United state   </p>
                                      </div>
                                     </Col>
@@ -163,7 +173,37 @@ function Mywallet (props)
             </Row>
             </Container>
             <Adjustment_modal open={adjustopen} toggles={toggel_adjustment} Account={isAccount} adjust={adjust_Account}/>
+
+{/* 
+ Modal for deleting wallet 
+
+
+*/}
+            <Modal isOpen={deleteModal} fade={false} toggle={toggle_delete_modal}>
+                <ModalHeader className="border-0">
+                    <h6 className="">Do you want to Delete Wallet your  {isAccount.Account} ?</h6>
+                </ModalHeader>
+                <ModalBody>
+                    <p className="text-secondary fw-bold"> 
+                    You will also delete all of its transactions, budgets, events, bills and this action cannot be undone.
+                    </p>
+
+                </ModalBody>
+                <ModalFooter>
+                <div className="d-flex justify-content-end">
+                        <Button color="success" className=" mx-2 " onClick={toggle_delete_modal}> Cancel</Button>
+                        <Button color="danger " className="ms-3 "onClick={delete_wallet}> Delete</Button>
+                  </div>
+
+                </ModalFooter>
+
+            </Modal>
+
+
         </div>
+
+
+   
     );
 }
 export default Mywallet;
